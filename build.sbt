@@ -407,7 +407,7 @@ lazy val cats = project
   .settings(publishSettings) // these settings are needed to release all aggregated modules under this root module
   .settings(noPublishSettings) // this is to exclue the root module itself from being published.
   .aggregate(catsJVM, catsJS)
-  .dependsOn(catsJVM, catsJS, tests.jvm % "test-internal -> test")
+  .dependsOn(catsJVM, catsJS, tests.jvm % "test->test")
 
 lazy val catsJVM = project
   .in(file(".catsJVM"))
@@ -436,10 +436,10 @@ lazy val catsJVM = project
     laws.jvm,
     free.jvm,
     testkit.jvm,
-    tests.jvm % "test-internal -> test",
+    tests.jvm % "test->test",
     alleycatsCore.jvm,
     alleycatsLaws.jvm,
-    alleycatsTests.jvm % "test-internal -> test",
+    alleycatsTests.jvm % "test->test",
     jvm
   )
 
@@ -469,10 +469,10 @@ lazy val catsJS = project
     laws.js,
     free.js,
     testkit.js,
-    tests.js % "test-internal -> test",
+    tests.js % "test->test",
     alleycatsCore.js,
     alleycatsLaws.js,
-    alleycatsTests.js % "test-internal -> test",
+    alleycatsTests.js % "test->test",
     js
   )
   .enablePlugins(ScalaJSPlugin)
@@ -536,7 +536,7 @@ lazy val laws = crossProject(JSPlatform, JVMPlatform)
 
 lazy val free = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Pure)
-  .dependsOn(macros, core, tests % "test-internal -> test")
+  .dependsOn(macros, core, tests % "test->test")
   .settings(moduleName := "cats-free", name := "Cats Free")
   .settings(catsSettings)
   .jsSettings(commonJsSettings)
@@ -642,7 +642,7 @@ lazy val binCompatTest = project
 
 // cats-js is JS-only
 lazy val js = project
-  .dependsOn(macros.js, core.js, tests.js % "test-internal -> test")
+  .dependsOn(macros.js, core.js, tests.js % "test->test")
   .settings(moduleName := "cats-js")
   .settings(catsSettings)
   .settings(commonJsSettings)
@@ -650,7 +650,7 @@ lazy val js = project
 
 // cats-jvm is JVM-only
 lazy val jvm = project
-  .dependsOn(macros.jvm, core.jvm, tests.jvm % "test-internal -> test")
+  .dependsOn(macros.jvm, core.jvm, tests.jvm % "test->test")
   .settings(moduleName := "cats-jvm")
   .settings(catsSettings)
   .settings(commonJvmSettings)
